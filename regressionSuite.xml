@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Automation regression Test Suite">
+
+<test thread-count="5" name="Smoke Test for Home Page">
+    <packages>
+      <package name="homePage" /> 
+   </packages>
+</test> 
+
+</suite>
+
+<!--  java -classpath ".\lib\*;.\bin" org.testng.TestNG regressionSuite.xml -->
