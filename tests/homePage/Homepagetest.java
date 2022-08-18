@@ -1,6 +1,7 @@
 package homePage;
 
 import static org.testng.Assert.assertEquals;
+import java.lang.reflect.Method;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -10,7 +11,7 @@ import GenericComponents.GenericComponents;
 
 public class Homepagetest extends GenericComponents
 {
-	String resultsLocation = null;
+	
 	Homepagetest obj = null;
 	HomepageFunctions hpf = null;
 	
@@ -18,12 +19,14 @@ public class Homepagetest extends GenericComponents
 	public void beginExecution()
 	{
 		obj = new Homepagetest();
-		resultsLocation = obj.createResultsFolder();
+		obj.createResultsFolder();
+		
 	}
 	
 	@BeforeMethod
-	public void launchApplication() 
+	public void launchApplication(Method method) 
 	{
+		testFolderLocation = obj.createTestsFolder(method.getName());
 		obj.LaunchApplication("firefox","http://the-internet.herokuapp.com/");
 		hpf =  new HomepageFunctions();
 	}

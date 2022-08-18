@@ -13,7 +13,7 @@ import java.util.Properties;
 public class FileUtilities {
 	
 	public static String resultsFolderName;
-	
+	public static String testFolderLocation = null;
 	public static Properties getObjectLibrary(String FileName)
 	{
 		Properties prop = new Properties();
@@ -46,6 +46,14 @@ public class FileUtilities {
 	    //Creating a folder using mkdir() method  
 	    bool = f1.mkdir();  
 	    return resultsFolderName;
+	}
+	
+	public String createTestsFolder(String TestName)
+	{
+		File f1 =  new File(resultsFolderName + "\\" + TestName);
+	    //Creating a folder using mkdir() method  
+	    boolean bool = f1.mkdir();  
+	    return resultsFolderName + "\\" + TestName;
 	}
 	
 

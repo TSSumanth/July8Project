@@ -85,7 +85,7 @@ public class GenericComponents extends FileUtilities
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File scrFile = ts.getScreenshotAs(OutputType.FILE);
 			try {
-				FileUtils.copyFile(scrFile, new File(resultsFolderName +"\\" +ScreenshotName + ".png"));
+				FileUtils.copyFile(scrFile, new File(testFolderLocation +"\\" +ScreenshotName + ".png"));
 				counter++;
 			} catch (IOException e) {
 				e.printStackTrace();
