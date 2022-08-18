@@ -17,39 +17,42 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import Utils.FileUtilities;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;  
 
 public class GenericComponents extends FileUtilities
 {
 	
 	public static WebDriver driver;
-	
-	
+
+	private static int counter = 1;
 	/*
 	 *  LaunchApplication - Method opens the browser of our choice and lauches the application url that we test
 	 *  Parameters: BrowserName - Provide the beowser that you want to use for the current test
 	 *  URL - Provide the Applciation URL that you are testing
 	 */
-	public void LaunchApplication(String BrowserName, String URL)
+	public  void LaunchApplication(String BrowserName, String URL)
 	{
-		if(BrowserName.equals("Chrome"))
+		if(BrowserName.equalsIgnoreCase("Chrome"))
 		{
-			System.setProperty("webdriver.chrome.driver", "C:\\Users\\tssum\\Downloads\\chromedriver_win32\\chromedriver.exe"); 
+			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\lib\\"+"chromedriver.exe"); 
 			driver =  new ChromeDriver();
 			driver.get(URL);
 		}
-		else if(BrowserName.equals("Firefox")) 
+		else if(BrowserName.equalsIgnoreCase("Firefox")) 
 		{
-			System.setProperty("webdriver.gecko.driver", "C:\\Users\\tssum\\Downloads\\geckodriver-v0.31.0-win64\\geckodriver.exe"); 
+			System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir")+"\\lib\\"+"geckodriver.exe"); 
 			driver = new FirefoxDriver();
 			driver.get(URL);
 		}
+		this.takeScreenshot();
 	}
 	
 	
 	/*
 	 * getTitleOfWindow - to get current window title
 	 */
-	public String getTitleOfWindow()
+	public  String getTitleOfWindow()
 	{
 		return driver.getTitle();
 	}
@@ -58,7 +61,7 @@ public class GenericComponents extends FileUtilities
 	/*
 	 * getURLOfWindow - to get current window URL
 	 */
-	public String getURLOfWindow()
+	public  String getURLOfWindow()
 	{
 		return driver.getCurrentUrl();
 	}
@@ -67,7 +70,7 @@ public class GenericComponents extends FileUtilities
 	/*
 	 * quitBrowser - to close our current browser
 	 */
-	public void quitBrowser()
+	public  void quitBrowser()
 	{
 		driver.quit();
 	}
@@ -76,27 +79,23 @@ public class GenericComponents extends FileUtilities
 	/*
 	 * takeScreenshot - to take screenshot of current window
 	 */
-	public void takeScreenshot()
+	public  void takeScreenshot()
 	{
-		String ScreenshotName = "test";
+		String ScreenshotName = "screenshot"+counter;
 		TakesScreenshot ts = (TakesScreenshot) driver;
-		
 		File scrFile = ts.getScreenshotAs(OutputType.FILE);
-		
-		
 			try {
-				FileUtils.copyFile(scrFile, new File("C:\\Users\\tssum\\OneDrive\\Desktop\\Screehsots\\" + ScreenshotName + ".png"));
+				FileUtils.copyFile(scrFile, new File(resultsFolderName +"\\" +ScreenshotName + ".png"));
+				counter++;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
 	}
 	
 	/*
 	 * handleAlert - to accept or dismiss an Alert
 	 */
-	public void handleAlert(String action) 
+	public  void handleAlert(String action) 
 	{
 		Alert alert = driver.switchTo().alert();
 		
@@ -114,7 +113,7 @@ public class GenericComponents extends FileUtilities
 	/*
 	 * handleAlertPrompt - to sendtext to alert and accept or dismiss the Alert
 	 */
-	public void handleAlert(String action, String value)
+	public  void handleAlert(String action, String value)
 	{
 		WebDriverWait wait = new WebDriverWait(driver,10);
 		wait.until(ExpectedConditions.alertIsPresent());
@@ -132,23 +131,25 @@ public class GenericComponents extends FileUtilities
 		this.takeScreenshot();
 	}
 	
-	public boolean click(By by)
+	public  boolean click(By by)
 	{
 		try {
 			WebDriverWait wait = new WebDriverWait(driver,10);
 			WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(by));
 			wait.until(ExpectedConditions.elementToBeClickable(element));
 			element.click();
+			this.takeScreenshot();
 		}catch(Exception e)
 		{
 			System.out.println("Unable to perfrom Click on Element: "+ by.toString());
+			e.printStackTrace();
 			return false;
 		}
 		
 		return true;
 	}
 	
-	public boolean sendKeys(By by, String value)
+	public  boolean sendKeys(By by, String value)
 	{
 		try {
 			WebDriverWait wait = new WebDriverWait(driver,10);
@@ -163,6 +164,33 @@ public class GenericComponents extends FileUtilities
 		return true;
 	}
 	
+	public  boolean verifyCheckboxIsSelected(By by)
+	{
+		boolean selection = false;
+		try {
+			WebDriverWait wait = new WebDriverWait(driver,10);
+			WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(by));
+			wait.until(ExpectedConditions.visibilityOf(element));
+			selection = element.isSelected();
+			this.takeScreenshot();
+		}catch(Exception e)
+		{
+			System.out.println("Unable to verify element is selected: "+ by.toString());
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+		return selection;
+	}
+	
+	public  void sleep(int seconds)
+	{
+		try {
+			Thread.sleep(seconds*1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	
 
 }
