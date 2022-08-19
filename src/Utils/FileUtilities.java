@@ -13,7 +13,8 @@ import java.util.Properties;
 public class FileUtilities {
 	
 	public static String resultsFolderName;
-	public static String testFolderLocation = null;
+	public static String testFolderLocation;
+	
 	public static Properties getObjectLibrary(String FileName)
 	{
 		Properties prop = new Properties();
@@ -55,6 +56,4 @@ public class FileUtilities {
 	    boolean bool = f1.mkdir();  
 	    return resultsFolderName + "\\" + TestName;
 	}
-	
-
 }
