@@ -9,6 +9,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 
@@ -19,6 +24,8 @@ public class FileUtilities {
 	public static String testFolderLocation;
 	public static ExtentReports reports;
 	public static ExtentTest test;
+	public static Sheet testSheet;
+	public static int rownum;
 	public static Properties getObjectLibrary(String FileName)
 	{
 		Properties prop = new Properties();
@@ -61,6 +68,56 @@ public class FileUtilities {
 	    return resultsFolderName + "\\" + TestName;
 	}
 	
+	public static void getExcelWorkBook(String fileName)
+	{
+		try {
+			FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\testData\\"+fileName+".xlsx");
+			XSSFWorkbook workbook = new XSSFWorkbook(fis);
+			testSheet = workbook.getSheet("TestData");
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static String getData(String key)
+	{
+		int column = findColumn(key);
+		return testSheet.getRow(rownum).getCell(column).getStringCellValue();
+	}
+	
+	public static int findSheetRow(String TestCaseName) {
+		int r = testSheet.getLastRowNum();
+		for(int i=0;i<=r;i++)
+		{
+			Row row = testSheet.getRow(i);
+			String value = row.getCell(0).getStringCellValue();
+			if(value.equals(TestCaseName))
+			{
+				rownum = i;
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public static int findColumn(String DataKeyName)
+	{
+		Row row = testSheet.getRow(0);
+		for(int i=0;i<=row.getLastCellNum();i++)
+		{
+			Cell cell = row.getCell(i);
+			String value  = cell.getStringCellValue();
+			
+			if(value.equals(DataKeyName))
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
 	
 	public  void CreateExtentReport()
 	{

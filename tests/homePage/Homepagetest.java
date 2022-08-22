@@ -31,6 +31,7 @@ public class Homepagetest extends GenericComponents
 		obj.createResultsFolder();
 		report = new ExtentReports(resultsFolderName+"\\Homepagetest.html");
 		report.addSystemInfo("User Name", "Testing QA User");
+		getExcelWorkBook("TestSuite1");
 	}
 	
 	@BeforeMethod
@@ -40,15 +41,16 @@ public class Homepagetest extends GenericComponents
 		obj.LaunchApplication("firefox","http://the-internet.herokuapp.com/");
 		hpf =  new HomepageFunctions();
 		test = report.startTest(method.getName());
+		findSheetRow(method.getName());
 	}
 	
 	@Test
 	public void validateCheckbox1()
 	{
 		hpf.clickOnCheckboxesLink();
-		assertEquals(hpf.verifyCheckbox1IsSelected(), false);
+		assertEquals(hpf.verifyCheckbox1IsSelected(), Boolean.parseBoolean(getData("Checkbox1InitialStatus")));
 		hpf.clickOnCheckbox1();
-		assertEquals(hpf.verifyCheckbox1IsSelected(), true);
+		assertEquals(hpf.verifyCheckbox1IsSelected(), Boolean.parseBoolean(getData("Checkbox1FinalStatus")));
 		test.log(LogStatus.PASS, "Validated Checkbox 1");
 		test.log(LogStatus.PASS, test.addScreenCapture(takeScreenshot()) + "Check box is selected");
 	}
@@ -57,9 +59,9 @@ public class Homepagetest extends GenericComponents
 	public void validateCheckbox2()
 	{
 		hpf.clickOnCheckboxesLink();
-		assertEquals(hpf.verifyCheckbox2IsSelected(), true);
+		assertEquals(hpf.verifyCheckbox2IsSelected(), Boolean.parseBoolean(getData("Checkbox2InitialStatus")));
 		hpf.clickOnCheckbox2();
-		assertEquals(hpf.verifyCheckbox2IsSelected(), true);
+		assertEquals(hpf.verifyCheckbox2IsSelected(), Boolean.parseBoolean(getData("Checkbox2FinalStatus")));
 		test.log(LogStatus.PASS, "Validated Checkbox 2");
 	}
 	
