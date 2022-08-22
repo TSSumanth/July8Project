@@ -79,17 +79,18 @@ public class GenericComponents extends FileUtilities
 	/*
 	 * takeScreenshot - to take screenshot of current window
 	 */
-	public  void takeScreenshot()
+	public String takeScreenshot()
 	{
-		String ScreenshotName = "screenshot"+counter;
+		String ScreenshotName = "screenshot"+counter+ ".png";
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File scrFile = ts.getScreenshotAs(OutputType.FILE);
 			try {
-				FileUtils.copyFile(scrFile, new File(testFolderLocation +"\\" +ScreenshotName + ".png"));
+				FileUtils.copyFile(scrFile, new File(testFolderLocation +"\\" +ScreenshotName ));
 				counter++;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		return testFolderLocation +"\\" +ScreenshotName;
 	}
 	
 	/*

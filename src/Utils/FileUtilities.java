@@ -9,12 +9,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+
 
 public class FileUtilities {
 	
 	public static String resultsFolderName;
 	public static String testFolderLocation;
-	
+	public static ExtentReports reports;
+	public static ExtentTest test;
 	public static Properties getObjectLibrary(String FileName)
 	{
 		Properties prop = new Properties();
@@ -55,5 +59,48 @@ public class FileUtilities {
 	    //Creating a folder using mkdir() method  
 	    boolean bool = f1.mkdir();  
 	    return resultsFolderName + "\\" + TestName;
+	}
+	
+	
+	public  void CreateExtentReport()
+	{
+		reports = new ExtentReports(resultsFolderName+"\\Homepagetest.html");
+	}
+	
+	public void CreateExtentTest()
+	{
+		
+	}
+	
+	
+	public void LogSuccess(String info)
+	{
+		// Add to extent reports
+		// add to text file
+	}
+	
+	public void LogSuccess(String screnshotpath,  String info)
+	{
+		
+	}
+	
+	public void LogFailure(String info)
+	{
+		
+	}
+	
+	public void LogFailure(String screnshotpath,  String info)
+	{
+		
+	}
+	
+	public void LogInfo(String info)
+	{
+		
+	}
+	
+	public void LogInfo(String screnshotpath,  String info)
+	{
+		
 	}
 }

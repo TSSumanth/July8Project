@@ -12,5 +12,7 @@
 	<classpathentry kind="lib" path="C:/Users/tssum/eclipse-workspace/AutomationProject/lib/jcommander-1.82.jar"/>
 	<classpathentry kind="lib" path="C:/Users/tssum/eclipse-workspace/AutomationProject/lib/selenium-server-standalone-3.141.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/tssum/eclipse-workspace/AutomationProject/lib/testng-7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/tssum/eclipse-workspace/AutomationProject/lib/extentreports-2.40.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/tssum/eclipse-workspace/AutomationProject/lib/freemarker-2.3.30.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
