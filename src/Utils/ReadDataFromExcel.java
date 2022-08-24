@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
 
 public class ReadDataFromExcel {
 
@@ -75,7 +76,5 @@ public class ReadDataFromExcel {
 	{
 		return sht.getRow(rownum).getCell(colnum).getStringCellValue();
 	}
-
-
 
 }
